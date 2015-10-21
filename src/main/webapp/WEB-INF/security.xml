@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <http access-denied-page="/error403">
+        <intercept-url pattern="/alert" access="ROLE_USER,ROLE_ANONYMOUS" />
+        <intercept-url pattern="/getAlert" access="ROLE_USER,ROLE_ANONYMOUS" />
+        <intercept-url pattern="/user/addAlert" access="ROLE_USER" />
+        <intercept-url pattern="/alerts" access="ROLE_USER" />
+        <intercept-url pattern="/addUser" access="ROLE_USER,ROLE_ANONYMOUS" />
+        <intercept-url pattern="/tag" access="ROLE_USER" />
+        <intercept-url pattern="/tagByName" access="ROLE_USER" />
+        <intercept-url pattern="/user/addTag" access="ROLE_USER" />
+        <intercept-url pattern="/user" access="ROLE_USER,ROLE_ANONYMOUS" />
+        <intercept-url pattern="/showUser" access="ROLE_USER,ROLE_ANONYMOUS" />
+      <form-login login-page="/" default-target-url="/profil"
+                    authentication-failure-url="/?error=true" />
+
+        <logout logout-url="/user" logout-success-url="/" />
+        <anonymous username="guest" granted-authority="ROLE_ANONYMOUS" />
+        <remember-me />
+    </http>
+
+    <authentication-manager alias="authenticationManager" erase-credentials="false">
+        <authentication-provider >
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query=
+                                       "select username,password,true from users where username=?"
+                               authorities-by-username-query=
+                               "select username,role,true   from role where username = ?"/>
+
+            </authentication-provider>
+    </authentication-manager>
+</beans:beans>  
