@@ -1,21 +1,23 @@
 package com.instinctools.test.domain.model;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
+
 public class Alert {
     private Long id;
 
     @NotBlank
-    @Size(min=3, max=16)
+    @Size(min = 3, max = 16)
     private String alert;
     @NotBlank
-    @Size(min=3, max=16)
+    @Size(min = 3, max = 16)
     private String shortAlert;
     @NotBlank
-    @Size(min=3, max=160)
+    @Size(min = 3, max = 160)
     private String description;
     @NotBlank
-     private String views;
+    private String views;
 
     public Long getId() {
         return id;

@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 @Transactional
 public class TagServiceImpl implements TagService {
     @Autowired
     private TagDao tagRepository;
+
     @Override
     public List<TagEntity> getTags() {
         List<TagEntity> tagEntities = tagRepository.findAll();
@@ -32,7 +34,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public TagEntity getTagByName(String tagName) {
-        TagEntity tag=tagRepository.findByName(tagName);
+        TagEntity tag = tagRepository.findByName(tagName);
         return tag;
     }
 }

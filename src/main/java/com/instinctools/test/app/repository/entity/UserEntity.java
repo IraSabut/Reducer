@@ -8,16 +8,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="USERS")
-//@SequenceGenerator(name = "hibernate_sequence", sequenceName = "hibernate_sequence")
+@Table(name = "USERS")
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_USER")
     private Long id;
-    @Column(name="USERNAME")
+    @Column(name = "USERNAME")
     private String username;
-    @Column(name="PASSWORD")
+    @Column(name = "PASSWORD")
     private String password;
 
     public UserEntity() {
@@ -30,13 +29,13 @@ public class UserEntity {
     public void setUsername(String username) {
         this.username = username;
     }
+
     @Column(name = "ROLE_ID")
- //   @Enumerated(EnumType.STRING)
     private Role idRole;
 
     public Role getIdRole() {
         return idRole;
-                //Role.USER;
+
     }
 
     public void setIdRole(Role idRole) {
@@ -47,7 +46,7 @@ public class UserEntity {
 
         this.username = name;
         this.password = password;
-        this.idRole=idRole;
+        this.idRole = idRole;
     }
 
 

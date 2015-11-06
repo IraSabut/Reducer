@@ -1,4 +1,5 @@
 package com.instinctools.test.app.controller;
+
 import com.instinctools.test.app.repository.entity.AlertEntity;
 import com.instinctools.test.app.repository.entity.TagEntity;
 import com.instinctools.test.app.repository.entity.UserEntity;
@@ -40,28 +41,25 @@ public class SignupController {
     private TagService tagService;
 
     @Autowired
-    public SignupController(UserService userService,AlertService alertService,TagService tagService) {
-        this.userService=userService;
-        this.alertService=alertService;
-        this.tagService=tagService;
-          }
+    public SignupController(UserService userService, AlertService alertService, TagService tagService) {
+        this.userService = userService;
+        this.alertService = alertService;
+        this.tagService = tagService;
+    }
+
     protected static Logger logger = Logger.getLogger("controller");
    
 
-  /*  @RequestMapping(method = RequestMethod.GET)
-    public String signup(Model model) {
-        return "profil";
-    }
-*/
 
     @RequestMapping(value = "/addTag", method = RequestMethod.GET)
-      public String getAddTag(Model model) {
+    public String getAddTag(Model model) {
         logger.debug("Received request to show add page");
         model.addAttribute("tag", new TagEntity());
         return "tags";
     }
-    @RequestMapping(value ="/addTag",method = RequestMethod.POST)
-    public String addNewTagPost(@ModelAttribute("tag") TagEntity tag,  BindingResult results) {
+
+    @RequestMapping(value = "/addTag", method = RequestMethod.POST)
+    public String addNewTagPost(@ModelAttribute("tag") TagEntity tag, BindingResult results) {
         this.tagService.save(tag);
         logger.debug("Received request to add new user");
         return "signup.jsp";
@@ -75,48 +73,49 @@ public class SignupController {
     }
 
 
-
-    @RequestMapping(value ="/addAlert",method = RequestMethod.POST)
-    public String addNewAlertUserPost(@ModelAttribute("alert") AlertEntity alert,Model model,  BindingResult results) {
-        TagEntity tagEntity=alert.getTagEntity();
-        String sTagName=alert.getTagEntity().getTagName();
-        UserEntity userEntity=alert.getUserEntity();
+    @RequestMapping(value = "/addAlert", method = RequestMethod.POST)
+    public String addNewAlertUserPost(@ModelAttribute("alert") AlertEntity alert, Model model, BindingResult results) {
+        TagEntity tagEntity = alert.getTagEntity();
+        String sTagName = alert.getTagEntity().getTagName();
+        UserEntity userEntity = alert.getUserEntity();
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String sUserName=userDetails.getUsername();
-        String sUserPassword=userDetails.getPassword();
+        String sUserName = userDetails.getUsername();
+        String sUserPassword = userDetails.getPassword();
         userEntity.setUsername(sUserName);
         userEntity.setPassword(sUserPassword);
-        UserEntity userEntity1=this.userService.loadUserByCredentials(sUserName,sUserPassword);
-        TagEntity tagEntity1=this.tagService.getTagByName(sTagName);
-        if (tagEntity1!=null)
-        alert.setTagEntity(tagEntity1);
+        UserEntity userEntity1 = this.userService.loadUserByCredentials(sUserName, sUserPassword);
+        TagEntity tagEntity1 = this.tagService.getTagByName(sTagName);
+        if (tagEntity1 != null)
+            alert.setTagEntity(tagEntity1);
         else this.tagService.save(tagEntity);
         alert.setUserEntity(userEntity1);
         this.alertService.save(alert);
-        List<AlertEntity> alert1= this.alertService.getAlerts();
+        List<AlertEntity> alert1 = this.alertService.getAlerts();
         model.addAttribute("alerts", alert1);
-         logger.debug("Received request to add new user");
-        return "signup";//profil try
+        logger.debug("Received request to add new user");
+        return "signup";
     }
+
     @RequestMapping(value = "/addUser", method = RequestMethod.GET)
     public String getAdd(Model model) {
         logger.debug("Received request to show add page");
         model.addAttribute("user", new UserEntity());
         return "registrationUser";
     }
-    @RequestMapping(value ="/addUser",method = RequestMethod.POST)
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public String addNewUserPost(@ModelAttribute("user") UserEntity user, Model model, BindingResult results) {
         user.setIdRole(Role.USER);
         this.userService.save(user);
-        List<AlertEntity> alert= this.alertService.getAlerts();
+        List<AlertEntity> alert = this.alertService.getAlerts();
         model.addAttribute("alerts", alert);
         logger.debug("Received request to add new user");
         return "signup";
     }
 
-    @RequestMapping(value = "/tagByName/{tagName}",method = RequestMethod.GET)
+    @RequestMapping(value = "/tagByName/{tagName}", method = RequestMethod.GET)
     public String getAlertByTag(@PathVariable String tagName, Model model) {
-        List <AlertEntity> alertEntities =this.alertService.getAlertsByTagName(tagName);
+        List<AlertEntity> alertEntities = this.alertService.getAlertsByTagName(tagName);
         model.addAttribute("alertEntities", alertEntities);
         return "tagByName";
     }

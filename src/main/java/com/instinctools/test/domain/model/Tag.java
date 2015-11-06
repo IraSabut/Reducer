@@ -1,12 +1,14 @@
 package com.instinctools.test.domain.model;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
+
 public class Tag {
     private Long id;
 
     @NotBlank
-    @Size(min=3, max=16)
+    @Size(min = 3, max = 16)
     private String tagName;
 
     public Long getId() {

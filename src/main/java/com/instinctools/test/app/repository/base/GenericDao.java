@@ -6,18 +6,17 @@ import java.util.List;
 
 public interface GenericDao<T, PK extends Serializable> {
 
-	PK save(T obj);
+    PK save(T obj);
 
-	void update(T obj);
+    void update(T obj);
 
-	List<T> findAll();
+    List<T> findAll();
 
-	T findById(PK id);
+    T findById(PK id);
 
+    void delete(PK id);
 
-	void delete(PK id);
-
-	void delete(T persistentObject);
+    void delete(T persistentObject);
 
 
 }

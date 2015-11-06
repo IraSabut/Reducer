@@ -12,7 +12,7 @@ public class UserValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-     return    UserEntity.class.isAssignableFrom(aClass);
+        return UserEntity.class.isAssignableFrom(aClass);
     }
 
     @Override
@@ -26,8 +26,6 @@ public class UserValidator implements Validator {
 
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.empty", "Password must not be empty.");
-
-
 
 
     }

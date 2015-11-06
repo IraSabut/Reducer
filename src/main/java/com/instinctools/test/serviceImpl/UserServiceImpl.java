@@ -15,9 +15,7 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
-	private UserDao userRepository;
-
-
+    private UserDao userRepository;
 
 
     @Override
@@ -29,22 +27,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(UserEntity user) {
-userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
     public void updateUser(UserEntity user) {
-         userRepository.updateUser(user);
+        userRepository.updateUser(user);
     }
- /*   @Override
-    public UserPrincipal getUserByID(Long userId) {
-        UserEntity userEntity = userRepository.findById(userId);
-        return userEntity;
-    }*/
 
     @Override
     public UserEntity loadUserByCredentials(String login, String password) {
-       UserEntity user=userRepository.findByCredentials(login, password);
+        UserEntity user = userRepository.findByCredentials(login, password);
         return user;
     }
 
@@ -56,16 +49,11 @@ userRepository.save(user);
 
     @Override
     public UserPrincipal getUserByName(String username) {
-        UserEntity user=userRepository.findByName(username);
+        UserEntity user = userRepository.findByName(username);
         return null;
     }
 
-  /*  @Override
-    public UserEntity loadUserByCredentials(String login, String password) {
-        UserEntity userEntity = userRepository.findByCredentials(login,password);
-        return userEntity;
-    }
-*/
+
     @Override
     public UserEntity loadUserByName(String userName) {
         UserEntity userEntity = userRepository.findByName(userName);

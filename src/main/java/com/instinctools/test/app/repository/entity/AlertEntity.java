@@ -79,7 +79,7 @@ public class AlertEntity {
      }
 
     public void setAlertShortName(String alertShortName) {
-        String s=alertShortName.replaceAll("http://localhost:8084/","");
+        String s=alertShortName.replaceAll("http://localhost:8084/", "");
         this.alertShortName = s;
     }
 

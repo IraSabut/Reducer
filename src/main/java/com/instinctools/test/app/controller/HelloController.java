@@ -26,52 +26,51 @@ public class HelloController {
 
     protected static Logger logger = Logger.getLogger("controller");
 
-@Autowired
-    public HelloController(UserService userService,TagService tagService ,AlertService alertService) {
-    this.userService=userService;
-    this.tagService=tagService;
-    this.alertService=alertService;
+    @Autowired
+    public HelloController(UserService userService, TagService tagService, AlertService alertService) {
+        this.userService = userService;
+        this.tagService = tagService;
+        this.alertService = alertService;
     }
 
-   @RequestMapping(value = "/",method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String signup(Model model) {
-        List<AlertEntity> alert= this.alertService.getAlerts();
+        List<AlertEntity> alert = this.alertService.getAlerts();
         model.addAttribute("alerts", alert);
         return "signup";
     }
 
 
-    @RequestMapping(value = "/tag",method = RequestMethod.GET)
+    @RequestMapping(value = "/tag", method = RequestMethod.GET)
     public String getTags(Model model) {
-        List<TagEntity> tag= this.tagService.getTags();
-          model.addAttribute("tags", tag);
+        List<TagEntity> tag = this.tagService.getTags();
+        model.addAttribute("tags", tag);
         return "tag";
     }
 
 
-
-    @RequestMapping(value ="/getAlert{id}", method = RequestMethod.GET)
-    public String getAlert(@PathVariable Long id,Model model) {
-        AlertEntity alert =  this.alertService.getAlertByID(id);
+    @RequestMapping(value = "/getAlert{id}", method = RequestMethod.GET)
+    public String getAlert(@PathVariable Long id, Model model) {
+        AlertEntity alert = this.alertService.getAlertByID(id);
         model.addAttribute("alertById", alert);
         return "alertById";
     }
 
 
-    @RequestMapping(value = "/profil{username}",method = RequestMethod.GET)
-    public String getProfile(@PathVariable String username,String password, Model model) {
+    @RequestMapping(value = "/profil{username}", method = RequestMethod.GET)
+    public String getProfile(@PathVariable String username, String password, Model model) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String sUserName=userDetails.getUsername();
-        List <AlertEntity> alertEntities =this.alertService.getAlertsByUserName(sUserName);
+        String sUserName = userDetails.getUsername();
+        List<AlertEntity> alertEntities = this.alertService.getAlertsByUserName(sUserName);
         model.addAttribute("alertUserEntities", alertEntities);
         return "profil";
     }
 
-  @RequestMapping(value = "/addUser",method = RequestMethod.GET)
-  public String addNewUser(Model model) {
-      model.addAttribute("user", new UserEntity());
-      return "registrationUser";
-  }
+    @RequestMapping(value = "/addUser", method = RequestMethod.GET)
+    public String addNewUser(Model model) {
+        model.addAttribute("user", new UserEntity());
+        return "registrationUser";
+    }
 
 
 }

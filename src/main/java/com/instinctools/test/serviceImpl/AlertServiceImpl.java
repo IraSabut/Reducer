@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 @Transactional
-public class AlertServiceImpl implements AlertService{
+public class AlertServiceImpl implements AlertService {
     @Autowired
     private AlertDao alertRepository;
+
     @Override
     public List<AlertEntity> getAlerts() {
         List<AlertEntity> alertEntities = alertRepository.findAll();
@@ -29,14 +31,14 @@ public class AlertServiceImpl implements AlertService{
 
     @Override
     public List<AlertEntity> getAlertsByTagName(String tagName) {
-        List<AlertEntity> alertEntities=alertRepository.findByTagName(tagName);
-        return  alertEntities;
+        List<AlertEntity> alertEntities = alertRepository.findByTagName(tagName);
+        return alertEntities;
     }
 
     @Override
     public List<AlertEntity> getAlertsByUserName(String userName) {
-        List<AlertEntity> alertEntities=alertRepository.findByUserName(userName);
-        return  alertEntities;
+        List<AlertEntity> alertEntities = alertRepository.findByUserName(userName);
+        return alertEntities;
     }
 
     @Override
